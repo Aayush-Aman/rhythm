@@ -1,4 +1,5 @@
 import express from "express"
+import { clerkMiddleware } from '@clerk/express';
 import userRoutes from './routes/userRoutes.js'
 import albumRoutes from './routes/albumRoutes.js'
 import songRoutes from './routes/songRoutes.js'
@@ -6,13 +7,27 @@ import adminRoutes from './routes/adminRoutes.js'
 import authRoutes from './routes/authRoutes.js'
 import dotenv from "dotenv"
 import { ConnectDb } from "./lib/db.js"
+import fileUpload from "express-fileupload";
+import path from "path"
 
 dotenv.config()
 
 const PORT=process.env.PORT
+const __dirname=path.resolve();
 
 
-const app=express()
+const app=express();
+app.use(express.urlencoded({extended:true}));//this si used for parsing the data 
+app.use(clerkMiddleware());//for using the clerk Middleware
+app.use(fileUpload({
+  useTempFiles:true,
+    tempFileDir:path.join(__dirname,'tmp'),
+    createParentPath:true,
+    limits:{
+        fileSize: 10 * 1024 * 1024 // 5MB
+    }
+
+}));
 
 app.get('/',(req,res)=>{
     res.send("Backend is running ")
@@ -27,4 +42,4 @@ app.use('/api/albums',albumRoutes);
 app.listen(PORT,()=>{
     console.log("Server is running on port 3000")
     ConnectDb();
-})
+});
