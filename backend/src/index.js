@@ -5,6 +5,7 @@ import albumRoutes from './routes/albumRoutes.js'
 import songRoutes from './routes/songRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
 import authRoutes from './routes/authRoutes.js'
+import statsRoutes from './routes/statRoute.js'
 import dotenv from "dotenv"
 import { ConnectDb } from "./lib/db.js"
 import fileUpload from "express-fileupload";
@@ -37,7 +38,7 @@ app.use('/api/auth',authRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api/songs',songRoutes);
 app.use('/api/albums',albumRoutes);
-// app.use('/api/stats',);
+app.use('/api/stats',statsRoutes);
 
 //error handler 
 app.use((err,req,res,next)=>{
