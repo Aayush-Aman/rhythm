@@ -17,7 +17,7 @@ const __dirname=path.resolve();
 
 
 const app=express();
-app.use(express.urlencoded({extended:true}));//this si used for parsing the data 
+app.use(express.urlencoded({extended:true}));//this is used for parsing the data 
 app.use(clerkMiddleware());//for using the clerk Middleware
 app.use(fileUpload({
   useTempFiles:true,
@@ -38,6 +38,11 @@ app.use('/api/admin',adminRoutes);
 app.use('/api/songs',songRoutes);
 app.use('/api/albums',albumRoutes);
 // app.use('/api/stats',);
+
+//error handler 
+app.use((err,req,res,next)=>{
+    res.status(500).json({message:process.env.NODE_ENV === 'development' ? err.message : "Internal Server error"})
+})
 
 app.listen(PORT,()=>{
     console.log("Server is running on port 3000")

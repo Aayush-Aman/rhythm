@@ -1,6 +1,6 @@
 import { User } from "../models/userModel.js";
 
-export const authCallback=async(req,res)=>{
+export const authCallback=async(req,res,next)=>{
     try{
         const {id,firstName,lastName,imageUrl}=req.body;
 
@@ -20,6 +20,6 @@ export const authCallback=async(req,res)=>{
     }
     catch(err){
         console.log("Error in auth callback")
-        res.status(500).json({message:"Failed to create user",error:err.message})
+        next(err)
     }
 }
