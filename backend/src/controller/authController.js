@@ -1,6 +1,7 @@
 import { User } from "../models/userModel.js";
 
 export const authCallback=async(req,res,next)=>{
+    console.log("backend api for the auth has been hit ")
     try{
         const {id,firstName,lastName,imageUrl}=req.body;
 
@@ -17,9 +18,12 @@ export const authCallback=async(req,res,next)=>{
         })
         res.status(200).json({message:"User created successfully"})
     }
+    else{
+        res.status(200).json({message:"User already exists"})
+        }
     }
     catch(err){
-        console.log("Error in auth callback")
+        console.log("Error in auth callback",err)
         next(err)
     }
 }

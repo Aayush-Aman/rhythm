@@ -10,6 +10,7 @@ import dotenv from "dotenv"
 import { ConnectDb } from "./lib/db.js"
 import fileUpload from "express-fileupload";
 import path from "path"
+import cors from "cors"
 
 dotenv.config()
 
@@ -18,6 +19,14 @@ const __dirname=path.resolve();
 
 
 const app=express();
+
+app.use(express.json())//this is used for parsing the json data coming from the frontend
+app.use(cors({
+    origin:process.env.FRONTEND_URL,
+    withcredentials:true
+}));
+
+
 app.use(express.urlencoded({extended:true}));//this is used for parsing the data 
 app.use(clerkMiddleware());//for using the clerk Middleware
 app.use(fileUpload({
