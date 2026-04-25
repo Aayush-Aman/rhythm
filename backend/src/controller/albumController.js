@@ -1,5 +1,6 @@
 import {Album} from "../models/albumModel.js";
 export const getAlbums=async(req,res,next)=>{
+    console.log("api for fetching the albums is hit")
     try{
         const albums=await Album.find();
         res.status(200).json(albums);
@@ -12,6 +13,7 @@ export const getAlbums=async(req,res,next)=>{
 
 
 export const getAlbumById=async(req,res,next)=>{
+        console.log("api for fetching single album is hit")
     try{
         const {id}=req.params;
         const album=await Album.findById(id).populate('songs');
