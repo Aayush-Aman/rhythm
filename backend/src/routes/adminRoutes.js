@@ -14,5 +14,5 @@ router.delete('/albums/:id',deleteAlbum)
 
 //we even need a butto if the user is the admin or not , so that we can show the admin dashboard button to the user
 
-router.get('check',checkAdmin)
+router.get('/check',checkAdmin)
 export default router;

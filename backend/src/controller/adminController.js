@@ -113,5 +113,6 @@ export const deleteAlbum=async(req,res,next)=>{
 }
 
 export const checkAdmin=async(req,res,next)=>{
+    console.log("api for checking admin is hit")
     res.send({isAdmin:true})
 }

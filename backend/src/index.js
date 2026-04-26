@@ -23,12 +23,16 @@ const app=express();
 app.use(express.json())//this is used for parsing the json data coming from the frontend
 app.use(cors({
     origin:process.env.FRONTEND_URL,
-    withcredentials:true
+    credentials: true
 }));
 
+// app.use(clerkMiddleware());//for using the clerk Middleware
+app.use(clerkMiddleware({
+    publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
+    secretKey: process.env.CLERK_SECRET_KEY
+}));
 
 app.use(express.urlencoded({extended:true}));//this is used for parsing the data 
-app.use(clerkMiddleware());//for using the clerk Middleware
 app.use(fileUpload({
   useTempFiles:true,
     tempFileDir:path.join(__dirname,'tmp'),

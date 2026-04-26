@@ -7,7 +7,7 @@ router.get('/',(req,res)=>{
     res.send("song routes api hit ")
 })
 
-router.get('/songs',getAllSongs);
+router.get('/get-all',getAllSongs);
 router.get('/featured',getFeatured)
 router.get('/trending',getTrending)
 router.get('/made-for-you',getMadeForYou)
