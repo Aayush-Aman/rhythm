@@ -1,3 +1,4 @@
+import { Song } from "../models/songModel.js";
 import {Album} from "../models/albumModel.js";
 export const getAlbums=async(req,res,next)=>{
     console.log("api for fetching the albums is hit")
@@ -21,6 +22,7 @@ export const getAlbumById=async(req,res,next)=>{
         if(!album){
             return res.status(404).json({message:"Album not found"})
         }
+        console.log("Fetched album:", album);
         res.status(200).json(album);
     }
     catch(err){
