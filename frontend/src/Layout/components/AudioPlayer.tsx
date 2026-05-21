@@ -54,6 +54,6 @@ export const AudioPlayer = () => {
         }
     },[currentSong,isPlaying])
   return (
-    <audio />
+    <audio ref={audioRef} crossOrigin="anonymous" />
   )
 }
