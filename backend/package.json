@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "seed:album": "node src/seeds/albums.js",
     "seed:song": "node src/seeds/songs.js"
