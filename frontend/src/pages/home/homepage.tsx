@@ -7,7 +7,7 @@ import SectionGrid from './components/SectionGrid';
 import { useMusicPlayer } from '@/stores/useMusicPlayer';
 
 const homepage = () => {
-  const { fetchFeaturedSongs, fetchMadeForYouSongs, fetchTrendingSongs, featuredSongs,trendingSongs,MadeForYouSongs,isLoading,error} = useMusicStore();
+	const { fetchFeaturedSongs, fetchMadeForYouSongs, fetchTrendingSongs, featuredSongs, trendingSongs, madeForYouSongs, isLoading, error } = useMusicStore();
 
   	const { initializeQueue } = useMusicPlayer();
   useEffect(()=>{
@@ -17,14 +17,14 @@ const homepage = () => {
   },[])
   console.log("Featured Songs: ", featuredSongs);
   console.log("Trending Songs: ", trendingSongs);
-  console.log("Made For You Songs: ", MadeForYouSongs);
+  console.log("Made For You Songs: ", madeForYouSongs);
 
   useEffect(() => {
-		if (MadeForYouSongs.length > 0 && featuredSongs.length > 0 && trendingSongs.length > 0) {
-			const allSongs = [...featuredSongs, ...MadeForYouSongs, ...trendingSongs];
+		if (madeForYouSongs.length > 0 && featuredSongs.length > 0 && trendingSongs.length > 0) {
+			const allSongs = [...featuredSongs, ...madeForYouSongs, ...trendingSongs];
 			initializeQueue(allSongs);
 		}
-	}, [initializeQueue, MadeForYouSongs, trendingSongs, featuredSongs]);
+	}, [initializeQueue, madeForYouSongs, trendingSongs, featuredSongs]);
 
  return (
 		<main className='rounded-md overflow-hidden h-full bg-gradient-to-b from-zinc-800 to-zinc-900'>
@@ -35,7 +35,7 @@ const homepage = () => {
 					<FeaturedSection />
 
 					<div className='space-y-8'>
-						<SectionGrid title='Made For You' songs={MadeForYouSongs} isLoading={isLoading} />
+						<SectionGrid title='Made For You' songs={madeForYouSongs} isLoading={isLoading} />
 						<SectionGrid title='Trending' songs={trendingSongs} isLoading={isLoading} />
 					</div>
 				</div>

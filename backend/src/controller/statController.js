@@ -9,36 +9,39 @@ export const getStats=async(req,res,next)=>{
     
     //doing the optimiation of above task
     try{
-    const [totalSongs,totalAlbums,totalUsers,totolArtist]=Promise.all([
-        await Song.countDocuments(),
-        await Album.countDocuments(),
-        await User.countDocuments(),
-        //albums kitne hai , usko pata karne k liye 
-
-        await Song.aggregate([
-          {
-            $unionWith:{
-                coll:"albums",
-                pipeline:[],
-            },
-        },
+    const [totalSongs, totalAlbums, totalUsers, artistCount] = await Promise.all([
+        Song.countDocuments(),
+        Album.countDocuments(),
+        User.countDocuments(),
+        Song.aggregate([
             {
-                $group:{
-                    _id:"artist",
+                $project: { artist: 1 },
+            },
+            {
+                $unionWith: {
+                    coll: "albums",
+                    pipeline: [
+                        {
+                            $project: { artist: 1 },
+                        },
+                    ],
                 },
             },
             {
-                $count:"count",
+                $group: {
+                    _id: "$artist",
+                },
             },
-
+            {
+                $count: "count",
+            },
+        ])
     ])
-
-])
     res.status(200).json({
         totalSongs,
         totalAlbums,
         totalUsers,
-        totolArtist:totolArtist[0]?.count || 0, //agar count nahi hai to 0 return kardo
+        totalArtists: artistCount[0]?.count || 0, //agar count nahi hai to 0 return kardo
     })
     }
     catch(err){

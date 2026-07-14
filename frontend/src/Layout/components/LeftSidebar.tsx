@@ -7,9 +7,12 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Link } from 'react-router-dom'
 import { useMusicStore } from '@/stores/useMusicStore'
 import { useEffect } from 'react'
+import { useChatStore } from '@/stores/useChatStore'
 
 export const LeftSidebar = () => {
     const { albums, isLoading, error, fetchAlbums } = useMusicStore();
+	const { unreadConversations } = useChatStore();
+	const unreadCount = Object.values(unreadConversations).reduce((total, count) => total + count, 0);
 
     useEffect(()=>{
         fetchAlbums();
@@ -42,7 +45,12 @@ export const LeftSidebar = () => {
 								})
 							)}
 						>
-							<MessageCircle className='mr-2 size-5' />
+							<div className='relative mr-2'>
+								<MessageCircle className='size-5' />
+								{unreadCount > 0 && (
+									<div className='absolute -top-2 -right-2 size-3 rounded-full bg-emerald-500 ring-2 ring-zinc-900' />
+								)}
+							</div>
 							<span className='hidden md:inline'>Messages</span>
 						</Link>
 					</SignedIn>
@@ -72,7 +80,7 @@ export const LeftSidebar = () => {
 									<img
 										src={album.imageUrl}
 										alt='Playlist img'
-										className='size-12 rounded-md flex-shrink-0 object-cover'
+										className='size-12 rounded-md shrink-0 object-cover'
 									/>
 
 									<div className='flex-1 min-w-0 hidden md:block'>

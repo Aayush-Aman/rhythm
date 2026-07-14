@@ -3,9 +3,7 @@ import { getAllSongs,getFeatured,getTrending,getMadeForYou } from "../controller
 
 const router=Router();
 
-router.get('/',(req,res)=>{
-    res.send("song routes api hit ")
-})
+router.get('/',getAllSongs);
 
 router.get('/get-all',getAllSongs);
 router.get('/featured',getFeatured)

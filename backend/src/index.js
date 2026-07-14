@@ -8,17 +8,20 @@ import authRoutes from './routes/authRoutes.js'
 import statsRoutes from './routes/statRoute.js'
 import dotenv from "dotenv"
 import { ConnectDb } from "./lib/db.js"
+import { initializeSocket } from './lib/socket.js'
 import fileUpload from "express-fileupload";
+import { createServer } from "http"
 import path from "path"
 import cors from "cors"
 
 dotenv.config()
 
-const PORT=process.env.PORT
+const PORT=process.env.PORT || 3000
 const __dirname=path.resolve();
 
 
 const app=express();
+const server = createServer(app);
 
 app.use(express.json())//this is used for parsing the json data coming from the frontend
 app.use(cors({
@@ -58,7 +61,9 @@ app.use((err,req,res,next)=>{
     res.status(500).json({message:process.env.NODE_ENV === 'development' ? err.message : "Internal Server error"})
 })
 
-app.listen(PORT,()=>{
+initializeSocket(server);
+
+server.listen(PORT,()=>{
     console.log("Server is running on port 3000")
     ConnectDb();
 })

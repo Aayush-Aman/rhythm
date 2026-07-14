@@ -7,10 +7,10 @@ import { PlayButton } from "./PlayButton";
 
 type SectionGridProps = {
 	title: string;
-	songs: Song[];
+	songs?: Song[];
 	isLoading: boolean;
 };
-const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
+const SectionGrid = ({ songs = [], title, isLoading }: SectionGridProps) => {
 	if (isLoading) return <SectionGridSkeleton />;
 
 	return (
