@@ -5,7 +5,7 @@ import { useMusicStore } from "@/stores/useMusicStore";
 import { Clock, Pause, Play } from "lucide-react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import type { Song } from "@/types";
 export const formatDuration = (seconds: number) => {
 	const minutes = Math.floor(seconds / 60);
 	const remainingSeconds = seconds % 60;
@@ -36,7 +36,7 @@ const AlbumPage = () => {
 	const handlePlaySong=()=>{
 		if(!currentAlbum) return;
 
-		const isCurrentSongPlaying = currentAlbum.songs.some((song) => song._id === currentSong?._id);
+		const isCurrentSongPlaying = currentAlbum.songs.some((song:Song) => song._id === currentSong?._id);
 		if(isCurrentSongPlaying){
 			togglePlay();
 		}
@@ -88,7 +88,7 @@ const AlbumPage = () => {
 								className='w-14 h-14 rounded-full bg-green-500 hover:bg-green-400 
                 hover:scale-105 transition-all'
 							>
-								{isPlaying && currentAlbum?.songs.some((song) => song._id === currentSong?._id) ? (
+								{isPlaying && currentAlbum?.songs.some((song:Song) => song._id === currentSong?._id) ? (
 									<Pause className='h-7 w-7 text-black' />
 								) : (
 									<Play className='h-7 w-7 text-black' />
@@ -115,7 +115,7 @@ const AlbumPage = () => {
 
 							<div className='px-6'>
 								<div className='space-y-2 py-4'>
-									{currentAlbum?.songs.map((song, index) => {
+									{currentAlbum?.songs.map((song:Song, index:number) => {
 										const isCurrentSong = currentSong?._id === song._id;
 										return (
 											<div
